@@ -1,6 +1,6 @@
 #!/bin/bash
 export UUID=${UUID:-'31083dbf-ad9e-4b73-96f3-8e2707a10f2b'}
-export SERVER_PORT="${SERVER_PORT:-${PORT:-7860}}"
+export SERVER_PORT="${SERVER_PORT:-${PORT:-10000}}"
 export NEZHA_SERVER=${NEZHA_SERVER:-'nezhadata.hkpass.top'} 
 export NEZHA_PORT=${NEZHA_PORT:-'443'}     
 export NEZHA_KEY=${NEZHA_KEY:-'dj6IGSDR8PpaK17z46'}  
