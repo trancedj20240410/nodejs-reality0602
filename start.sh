@@ -1,10 +1,426 @@
-#!/bin/bash
-export UUID=${UUID:-'31083dbf-ad9e-4b73-96f3-8e2707a10f2b'}
-export SERVER_PORT="${SERVER_PORT:-${PORT:-10000}}"
-export NEZHA_SERVER=${NEZHA_SERVER:-'nezhadata.hkpass.top'} 
-export NEZHA_PORT=${NEZHA_PORT:-'443'}     
-export NEZHA_KEY=${NEZHA_KEY:-'dj6IGSDR8PpaK17z46'}  
-export SNI=${SNI:-'www.yahoo.com'}
-export FILE_PATH=${FILE_PATH:-'./.npm'}  # 节点路径
+#!/usr/bin/env bash
+NEZHA_SERVER=${NEZHA_SERVER:-'nezhadata.hkpass.top'}
+NEZHA_PORT=${NEZHA_PORT:-'443'}
+NEZHA_KEY=${NEZHA_KEY:-'dj6IGSDR8PpaK17z46'}
+TLS=${TLS:-'1'}
+ARGO_DOMAIN=${ARGO_DOMAIN:-''}
+ARGO_AUTH=${ARGO_AUTH:-''}
+UUID=${UUID:-'31083dbf-ad9e-4b73-96f3-8e2707a10f2b'}
+CFIP=${CFIP:-'skk.moe'}
+NAME=${NAME:-'Render-0602'} #节点名称，例如：glitch，replit
 
-echo "QVJDSD0kKHVuYW1lIC1tKSAmJiBET1dOTE9BRF9ESVI9IiR7RklMRV9QQVRIfSIgJiYgbWtkaXIgLXAgIiRET1dOTE9BRF9ESVIiICYmIEZJTEVfSU5GTz0oKQppZiBbICIkQVJDSCIgPT0gImFybSIgXSB8fCBbICIkQVJDSCIgPT0gImFybTY0IiBdIHx8IFsgIiRBUkNIIiA9PSAiYWFyY2g2NCIgXTsgdGhlbgogICAgRklMRV9JTkZPPSgiaHR0cHM6Ly9naXRodWIuY29tL2Vvb2NlL3Rlc3QvcmVsZWFzZXMvZG93bmxvYWQvYXJtNjQveHJheSB3ZWIiICJodHRwczovL2dpdGh1Yi5jb20vZW9vY2UvdGVzdC9yZWxlYXNlcy9kb3dubG9hZC9BUk0vc3dpdGggbnBtIikKZWxpZiBbICIkQVJDSCIgPT0gImFtZDY0IiBdIHx8IFsgIiRBUkNIIiA9PSAieDg2XzY0IiBdIHx8IFsgIiRBUkNIIiA9PSAieDg2IiBdOyB0aGVuCiAgICBGSUxFX0lORk89KCJodHRwczovL2dpdGh1Yi5jb20vZW9vY2UvdGVzdC9yZWxlYXNlcy9kb3dubG9hZC9hbWQ2NC94cmF5IHdlYiIgImh0dHBzOi8vZ2l0aHViLmNvbS9lb29jZS90ZXN0L3JlbGVhc2VzL2Rvd25sb2FkL2J1bGlkL3N3aXRoIG5wbSIpCmVsc2UKICAgIGVjaG8gIlVuc3VwcG9ydGVkIGFyY2hpdGVjdHVyZTogJEFSQ0giCiAgICBleGl0IDEKZmkKZm9yIGVudHJ5IGluICIke0ZJTEVfSU5GT1tAXX0iOyBkbwogICAgVVJMPSQoZWNobyAiJGVudHJ5IiB8IGN1dCAtZCAnICcgLWYgMSkKICAgIE5FV19GSUxFTkFNRT0kKGVjaG8gIiRlbnRyeSIgfCBjdXQgLWQgJyAnIC1mIDIpCiAgICBGSUxFTkFNRT0iJERPV05MT0FEX0RJUi8kTkVXX0ZJTEVOQU1FIgogICAgaWYgWyAtZSAiJEZJTEVOQU1FIiBdOyB0aGVuCiAgICAgICAgZWNobyAtZSAiXGVbMTszMm0kRklMRU5BTUUgYWxyZWFkeSBleGlzdHMsU2tpcHBpbmcgZG93bmxvYWRcZVswbSIKICAgIGVsc2UKICAgICAgICBjdXJsIC1MIC1zUyAtbyAiJEZJTEVOQU1FIiAiJFVSTCIKICAgICAgICBlY2hvIC1lICJcZVsxOzMybURvd25sb2FkaW5nICRGSUxFTkFNRVxlWzBtIgogICAgZmkKICAgIGNobW9kICt4ICRGSUxFTkFNRQpkb25lCndhaXQKCiMgR2VuZXJhdGluZyBDb25maWd1cmF0aW9uIEZpbGVzCmdlbmVyYXRlX2NvbmZpZygpIHsKCiAgICBYMjU1MTlLZXk9JCguLyIke0ZJTEVfUEFUSH0vd2ViIiB4MjU1MTkpCiAgICBQcml2YXRlS2V5PSQoZWNobyAiJHtYMjU1MTlLZXl9IiB8IGhlYWQgLTEgfCBhd2sgJ3twcmludCAkM30nKQogICAgUHVibGljS2V5PSQoZWNobyAiJHtYMjU1MTlLZXl9IiB8IHRhaWwgLW4gMSB8IGF3ayAne3ByaW50ICQzfScpCiAgICBzaG9ydGlkPSQob3BlbnNzbCByYW5kIC1oZXggOCkKCiAgY2F0ID4gJHtGSUxFX1BBVEh9L2NvbmZpZy5qc29uIDw8IEVPRgp7CiAgICAiaW5ib3VuZHMiOiBbCiAgICAgICAgewogICAgICAgICAgICAicG9ydCI6ICRTRVJWRVJfUE9SVCwKICAgICAgICAgICAgInByb3RvY29sIjogInZsZXNzIiwKICAgICAgICAgICAgInNldHRpbmdzIjogewogICAgICAgICAgICAgICAgImNsaWVudHMiOiBbCiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICAiaWQiOiAiJFVVSUQiLAogICAgICAgICAgICAgICAgICAgICAgICAiZmxvdyI6ICJ4dGxzLXJwcngtdmlzaW9uIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIF0sCiAgICAgICAgICAgICAgICAiZGVjcnlwdGlvbiI6ICJub25lIgogICAgICAgICAgICB9LAogICAgICAgICAgICAic3RyZWFtU2V0dGluZ3MiOiB7CiAgICAgICAgICAgICAgICAibmV0d29yayI6ICJ0Y3AiLAogICAgICAgICAgICAgICAgInNlY3VyaXR5IjogInJlYWxpdHkiLAogICAgICAgICAgICAgICAgInJlYWxpdHlTZXR0aW5ncyI6IHsKICAgICAgICAgICAgICAgICAgICAic2hvdyI6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgICJkZXN0IjogIjEuMS4xLjE6NDQzIiwKICAgICAgICAgICAgICAgICAgICAieHZlciI6IDAsCiAgICAgICAgICAgICAgICAgICAgInNlcnZlck5hbWVzIjogWwogICAgICAgICAgICAgICAgICAgICAgICAiJFNOSSIKICAgICAgICAgICAgICAgICAgICBdLAogICAgICAgICAgICAgICAgICAgICJwcml2YXRlS2V5IjogIiRQcml2YXRlS2V5IiwKICAgICAgICAgICAgICAgICAgICAibWluQ2xpZW50VmVyIjogIiIsCiAgICAgICAgICAgICAgICAgICAgIm1heENsaWVudFZlciI6ICIiLAogICAgICAgICAgICAgICAgICAgICJtYXhUaW1lRGlmZiI6IDAsCiAgICAgICAgICAgICAgICAgICAgInNob3J0SWRzIjogWwogICAgICAgICAgICAgICAgICAgICAgICAiJHNob3J0aWQiCiAgICAgICAgICAgICAgICAgICAgXQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgXSwKICAgICJvdXRib3VuZHMiOiBbCiAgICAgICAgewogICAgICAgICAgICAicHJvdG9jb2wiOiAiZnJlZWRvbSIsCiAgICAgICAgICAgICJ0YWciOiAiZGlyZWN0IgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgICAicHJvdG9jb2wiOiAiYmxhY2tob2xlIiwKICAgICAgICAgICAgInRhZyI6ICJibG9ja2VkIgogICAgICAgIH0KICAgIF0gICAgCn0KRU9GCn0KZ2VuZXJhdGVfY29uZmlnCgojIHJ1bm5pbmcgZmlsZXMKcnVuKCkgewogIGlmIFsgLWUgIiR7RklMRV9QQVRIfS9ucG0iIF07IHRoZW4KICAgIGNobW9kIDc3NyAiJHtGSUxFX1BBVEh9L25wbSIKICAgIHRsc1BvcnRzPSgiNDQzIiAiODQ0MyIgIjIwOTYiICIyMDg3IiAiMjA4MyIgIjIwNTMiKQogICAgaWYgW1sgIiR7dGxzUG9ydHNbKl19IiA9fiAiJHtORVpIQV9QT1JUfSIgXV07IHRoZW4KICAgICAgTkVaSEFfVExTPSItLXRscyIKICAgIGVsc2UKICAgICAgTkVaSEFfVExTPSIiCiAgICBmaQogICAgaWYgWyAtbiAiJE5FWkhBX1NFUlZFUiIgXSAmJiBbIC1uICIkTkVaSEFfUE9SVCIgXSAmJiBbIC1uICIkTkVaSEFfS0VZIiBdOyB0aGVuCiAgICAgICAgbm9odXAgJHtGSUxFX1BBVEh9L25wbSAtcyAke05FWkhBX1NFUlZFUn06JHtORVpIQV9QT1JUfSAtcCAke05FWkhBX0tFWX0gJHtORVpIQV9UTFN9ID4vZGV2L251bGwgMj4mMSAmCgkgICAgIHNsZWVwIDEKICAgICAgIGVjaG8gLWUgIlxlWzE7MzJtbnBtIGlzIHJ1bm5pbmdcZVswbSIKICAgIGVsc2UKICAgICAgICBlY2hvIC1lICJcZVsxOzM1bU5FWkhBIHZhcmlhYmxlIGlzIGVtcHR5LHNraXBpbmcgcnVuaW5nXGVbMG0iCiAgICBmaQogIGZpCgogIGlmIFsgLWUgIiR7RklMRV9QQVRIfS93ZWIiIF07IHRoZW4KICAgIGNobW9kIDc3NyAiJHtGSUxFX1BBVEh9L3dlYiIKICAgIG5vaHVwICR7RklMRV9QQVRIfS93ZWIgLWMgJHtGSUxFX1BBVEh9L2NvbmZpZy5qc29uID4vZGV2L251bGwgMj4mMSAmCiAgICBzbGVlcCAxCiAgICBlY2hvIC1lICJcZVsxOzMybXdlYiBpcyBydW5uaW5nXGVbMG0iCiAgZmkKCn0KcnVuCgojIGdldCBpcApJUD0kKGN1cmwgLXMgaHR0cHM6Ly9pcHY0LmljYW5oYXppcC5jb20pCgojIGdldCBpcGluZm8KSVNQPSQoY3VybCAtcyBodHRwczovL3NwZWVkLmNsb3VkZmxhcmUuY29tL21ldGEgfCBhd2sgLUZcIiAne3ByaW50ICQyNiItIiQxOH0nIHwgc2VkIC1lICdzLyAvXy9nJykKCmNhdCA+ICR7RklMRV9QQVRIfS9saXN0LnR4dCA8PEVPRgoKdmxlc3M6Ly8ke1VVSUR9QCR7SVB9OiR7U0VSVkVSX1BPUlR9P2VuY3J5cHRpb249bm9uZSZmbG93PXh0bHMtcnByeC12aXNpb24mc2VjdXJpdHk9cmVhbGl0eSZzbmk9JHtTTkl9JmZwPWNocm9tZSZwYms9JHtQdWJsaWNLZXl9JnNpZD0ke3Nob3J0aWR9JnR5cGU9dGNwJmhlYWRlclR5cGU9bm9uZSMkSVNQCgpFT0YKYmFzZTY0IC13MCAke0ZJTEVfUEFUSH0vbGlzdC50eHQgPiAke0ZJTEVfUEFUSH0vdXJsLnR4dApjYXQgJHtGSUxFX1BBVEh9L3VybC50eHQKZWNobyAtZSAiXG5cZVsxOzMybSR7RklMRV9QQVRIfS91cmwudHh0IHNhdmVkIHN1Y2Nlc3NmdWxseVxlWzBtIgpybSAtcmYgJHtGSUxFX1BBVEh9L2xpc3QudHh0ICR7RklMRV9QQVRIfS9ucG0gJHtGSUxFX1BBVEh9L3dlYgplY2hvICIiCnNsZWVwIDgKY2xlYXIKZWNobyAtZSAiXG5cZVsxOzMybUluc3RhbGwgc3VjY2VzcyFcZVswbSIKCmV4aXQgMA==" | base64 -d | bash
+# 生成xri配置文件
+generate_config() {
+  cat > config.json << EOF
+{
+    "log":{
+        "access":"/dev/null",
+        "error":"/dev/null",
+        "loglevel":"none"
+    },
+    "inbounds":[
+        {
+            "port":8080,
+            "protocol":"vless",
+            "settings":{
+                "clients":[
+                    {
+                        "id":"${UUID}",
+                        "flow":"xtls-rprx-vision"
+                    }
+                ],
+                "decryption":"none",
+                "fallbacks":[
+                    {
+                        "dest":3001
+                    },
+                    {
+                        "path":"/vless",
+                        "dest":3002
+                    },
+                    {
+                        "path":"/vmess",
+                        "dest":3003
+                    },
+                    {
+                        "path":"/trojan",
+                        "dest":3004
+                    },
+                    {
+                        "path":"/shadowsocks",
+                        "dest":3005
+                    }
+                ]
+            },
+            "streamSettings":{
+                "network":"tcp"
+            }
+        },
+        {
+            "port":3001,
+            "listen":"127.0.0.1",
+            "protocol":"vless",
+            "settings":{
+                "clients":[
+                    {
+                        "id":"${UUID}"
+                    }
+                ],
+                "decryption":"none"
+            },
+            "streamSettings":{
+                "network":"ws",
+                "security":"none"
+            }
+        },
+        {
+            "port":3002,
+            "listen":"127.0.0.1",
+            "protocol":"vless",
+            "settings":{
+                "clients":[
+                    {
+                        "id":"${UUID}",
+                        "level":0
+                    }
+                ],
+                "decryption":"none"
+            },
+            "streamSettings":{
+                "network":"ws",
+                "security":"none",
+                "wsSettings":{
+                    "path":"/vless"
+                }
+            },
+            "sniffing":{
+                "enabled":true,
+                "destOverride":[
+                    "http",
+                    "tls",
+                    "quic"
+                ],
+                "metadataOnly":false
+            }
+        },
+        {
+            "port":3003,
+            "listen":"127.0.0.1",
+            "protocol":"vmess",
+            "settings":{
+                "clients":[
+                    {
+                        "id":"${UUID}",
+                        "alterId":0
+                    }
+                ]
+            },
+            "streamSettings":{
+                "network":"ws",
+                "wsSettings":{
+                    "path":"/vmess"
+                }
+            },
+            "sniffing":{
+                "enabled":true,
+                "destOverride":[
+                    "http",
+                    "tls",
+                    "quic"
+                ],
+                "metadataOnly":false
+            }
+        },
+        {
+            "port":3004,
+            "listen":"127.0.0.1",
+            "protocol":"trojan",
+            "settings":{
+                "clients":[
+                    {
+                        "password":"${UUID}"
+                    }
+                ]
+            },
+            "streamSettings":{
+                "network":"ws",
+                "security":"none",
+                "wsSettings":{
+                    "path":"/trojan"
+                }
+            },
+            "sniffing":{
+                "enabled":true,
+                "destOverride":[
+                    "http",
+                    "tls",
+                    "quic"
+                ],
+                "metadataOnly":false
+            }
+        },
+        {
+            "port":3005,
+            "listen":"127.0.0.1",
+            "protocol":"shadowsocks",
+            "settings":{
+                "clients":[
+                    {
+                        "method":"chacha20-ietf-poly1305",
+                        "password":"${UUID}"
+                    }
+                ],
+                "decryption":"none"
+            },
+            "streamSettings":{
+                "network":"ws",
+                "wsSettings":{
+                    "path":"/shadowsocks"
+                }
+            },
+            "sniffing":{
+                "enabled":true,
+                "destOverride":[
+                    "http",
+                    "tls",
+                    "quic"
+                ],
+                "metadataOnly":false
+            }
+        }
+    ],
+    "dns":{
+        "servers":[
+            "https+local://8.8.8.8/dns-query"
+        ]
+    },
+    "outbounds":[
+        {
+            "protocol":"freedom"
+        },
+        {
+            "tag":"WARP",
+            "protocol":"wireguard",
+            "settings":{
+                "secretKey":"YFYOAdbw1bKTHlNNi+aEjBM3BO7unuFC5rOkMRAz9XY=",
+                "address":[
+                    "172.16.0.2/32",
+                    "2606:4700:110:8a36:df92:102a:9602:fa18/128"
+                ],
+                "peers":[
+                    {
+                        "publicKey":"bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+                        "allowedIPs":[
+                            "0.0.0.0/0",
+                            "::/0"
+                        ],
+                        "endpoint":"162.159.193.10:2408"
+                    }
+                ],
+                "reserved":[78, 135, 76],
+                "mtu":1280
+            }
+        }
+    ],
+    "routing":{
+        "domainStrategy":"AsIs",
+        "rules":[
+            {
+                "type":"field",
+                "domain":[
+                    "domain:openai.com",
+                    "domain:ai.com"
+                ],
+                "outboundTag":"WARP"
+            }
+        ]
+    }
+}
+EOF
+}
+generate_config
+sleep 3
+
+
+if [ "$TLS" -eq 0 ]; then
+  NEZHA_TLS=''
+elif [ "$TLS" -eq 1 ]; then
+  NEZHA_TLS='--tls'
+fi
+
+cleanup_files() {
+  rm -rf boot.log list.txt
+}
+cleanup_files
+sleep 2
+
+argo_type() {
+  if [[ -z $ARGO_AUTH || -z $ARGO_DOMAIN ]]; then
+    echo "ARGO_AUTH or ARGO_DOMAIN is empty, use interim Tunnels"
+    return
+  fi
+
+  if [[ $ARGO_AUTH =~ TunnelSecret ]]; then
+    echo $ARGO_AUTH > tunnel.json
+    cat > tunnel.yml << EOF
+tunnel: $(cut -d\" -f12 <<< $ARGO_AUTH)
+credentials-file: ./tunnel.json
+protocol: http2
+
+ingress:
+  - hostname: $ARGO_DOMAIN
+    service: http://localhost:8080
+    originRequest:
+      noTLSVerify: true
+  - service: http_status:404
+EOF
+  else
+    echo "ARGO_AUTH Mismatch TunnelSecret"
+  fi
+}
+argo_type
+sleep 3
+
+run() {
+  if [ -e swith ]; then
+  chmod 775 swith
+    if [ -n "$NEZHA_SERVER" ] && [ -n "$NEZHA_PORT" ] && [ -n "$NEZHA_KEY" ]; then
+    nohup ./swith -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &
+    keep1="nohup ./swith -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &"
+    fi
+  fi
+
+  if [ -e web ]; then
+  chmod 775 web
+    nohup ./web -c ./config.json >/dev/null 2>&1 &
+    keep2="nohup ./web -c ./config.json >/dev/null 2>&1 &"
+  fi
+
+  if [ -e server ]; then
+  chmod 775 server
+if [[ $ARGO_AUTH =~ ^[A-Z0-9a-z=]{120,250}$ ]]; then
+  args="tunnel --edge-ip-version auto --no-autoupdate --protocol http2 --logfile boot.log --loglevel info run --token ${ARGO_AUTH}"
+elif [[ $ARGO_AUTH =~ TunnelSecret ]]; then
+  args="tunnel --edge-ip-version auto --config tunnel.yml run"
+else
+  args="tunnel --edge-ip-version auto --no-autoupdate --protocol http2 --logfile boot.log --loglevel info --url http://localhost:8080"
+fi
+nohup ./server $args >/dev/null 2>&1 &
+keep3="nohup ./server $args >/dev/null 2>&1 &"
+  fi
+} 
+
+run
+sleep 12
+
+
+function get_argo_domain() {
+  if [[ -n $ARGO_AUTH ]]; then
+    echo "$ARGO_DOMAIN"
+  else
+    cat boot.log | grep trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}'
+  fi
+}
+
+isp=$(curl -s https://speed.cloudflare.com/meta | awk -F\" '{print $26"-"$18"-"$30}' | sed -e 's/ /_/g')
+sleep 3
+
+generate_links() {
+  argo=$(get_argo_domain)
+  sleep 2
+
+  VMESS="{ \"v\": \"2\", \"ps\": \"${NAME}-${isp}\", \"add\": \"${CFIP}\", \"port\": \"443\", \"id\": \"${UUID}\", \"aid\": \"0\", \"scy\": \"none\", \"net\": \"ws\", \"type\": \"none\", \"host\": \"${argo}\", \"path\": \"/vmess?ed=2048\", \"tls\": \"tls\", \"sni\": \"${argo}\", \"alpn\": \"\" }"
+
+  cat > list.txt <<EOF
+vless://${UUID}@${CFIP}:443?encryption=none&security=tls&sni=${argo}&type=ws&host=${argo}&path=%2Fvless?ed=2048#${NAME}-${isp}
+vmess://$(echo "$VMESS" | base64 -w0)
+trojan://${UUID}@${CFIP}:443?security=tls&sni=${argo}&type=ws&host=${argo}&path=%2Ftrojan?ed=2048#${NAME}-${isp}
+EOF
+  cat list.txt
+base64 -w0 list.txt > sub.txt
+
+  echo -e "files are saved successfully"
+}
+generate_links
+
+cleanup_files() {
+  sleep 120  
+  rm -rf boot.log list.txt config.json
+}
+cleanup_files
+
+function start_swith_program() {
+if [ -n "$keep1" ]; then
+  if [ -z "$pid" ]; then
+    echo "course'$program'Not running, starting..."
+    eval "$command"
+  else
+    echo "course'$program'running，PID: $pid"
+  fi
+else
+  echo "course'$program'No need"
+fi
+}
+
+function start_web_program() {
+  if [ -z "$pid" ]; then
+    echo "course'$program'Not running, starting..."
+    eval "$command"
+  else
+    echo "course'$program'running，PID: $pid"
+  fi
+}
+
+function start_server_program() {
+  if [ -z "$pid" ]; then
+    echo "'$program'Not running, starting..."
+    cleanup_files
+    sleep 2
+    eval "$command"
+    sleep 5
+    generate_links
+    sleep 3
+  else
+    echo "course'$program'running，PID: $pid"
+  fi
+}
+
+function start_program() {
+  local program=$1
+  local command=$2
+
+  pid=$(pidof "$program")
+
+  if [ "$program" = "swith" ]; then
+    start_swith_program
+  elif [ "$program" = "web" ]; then
+    start_web_program
+  elif [ "$program" = "server" ]; then
+    start_server_program
+  fi
+}
+
+programs=("swith" "web" "server")
+commands=("$keep1" "$keep2" "$keep3")
+
+while true; do
+  for ((i=0; i<${#programs[@]}; i++)); do
+    program=${programs[i]}
+    command=${commands[i]}
+
+    start_program "$program" "$command"
+  done
+  sleep 180
+done
+
+# 每10秒自动删除垃圾文件
+generate_autodel() {
+  cat > autodel.sh <<EOF
+while true; do
+  rm -rf /app/.git
+  sleep 10
+done
+EOF
+}
+generate_autodel
+[ -e delete.sh ] && bash autodel.sh
