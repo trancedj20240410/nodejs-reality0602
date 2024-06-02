@@ -1,9 +1,9 @@
 #!/bin/bash
-export UUID=${UUID:-'f6bf5ff2-023f-4c00-a572-22bbebae4fbc'}
+export UUID=${UUID:-'31083dbf-ad9e-4b73-96f3-8e2707a10f2b'}
 export SERVER_PORT="${SERVER_PORT:-${PORT:-7860}}"
-export NEZHA_SERVER=${NEZHA_SERVER:-'nz.abc.cn'} 
-export NEZHA_PORT=${NEZHA_PORT:-'5555'}     
-export NEZHA_KEY=${NEZHA_KEY:-''}  
+export NEZHA_SERVER=${NEZHA_SERVER:-'nezhadata.hkpass.top'} 
+export NEZHA_PORT=${NEZHA_PORT:-'443'}     
+export NEZHA_KEY=${NEZHA_KEY:-'dj6IGSDR8PpaK17z46'}  
 export SNI=${SNI:-'www.yahoo.com'}
 export FILE_PATH=${FILE_PATH:-'./.npm'}  # 节点路径
 
