@@ -19,4 +19,4 @@ jobs:
     - name: Build and push Docker image
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/trancedj20240410-nodejs-reality0602 .
-        docker push ${{ secrets.DOCKER_USERNAME }}/trancedj20240410/render/trancedj20240410-nodejs-reality0602
+        docker push ${{ secrets.DOCKER_USERNAME }}/trancedj20240410/render/
