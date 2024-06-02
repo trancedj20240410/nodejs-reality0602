@@ -1,12 +1,13 @@
-FROM node:alpine
+FROM node:slim
 
 WORKDIR /app
 
 COPY . .
 
-# EXPOSE 3000
+EXPOSE 3000
 
-RUN chmod +x index.js start.sh server swith web /app &&\
-    npm install -r package.json
-
+RUN apt update -y &&\
+    chmod +x index.js &&\
+    npm install 
+    
 CMD ["node", "index.js"]

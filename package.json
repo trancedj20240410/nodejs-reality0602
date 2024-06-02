@@ -1,20 +1,18 @@
 {
   "name": "node-reality0602",
-  "version": "1.0.0",
-  "description": "node.js",
+  "version": "8.8.8",
+  "description": "Thsi is a node project",
   "main": "index.js",
   "author": "trance",
+  "repository": "https://github.com/trancedj20240410/nodejs-reality",
   "license": "MIT",
   "private": false,
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "axios": "^1.5.1",
-    "basic-auth": "^2.0.1",
-    "express": "^4.18.2",
-    "request": "^2.88.2",
-    "http-proxy-middleware": "^3.0.0-beta.0"
+    "axios": "latest",
+    "express": "^4.18.2"
   },
   "engines": {
     "node": ">=14"
