@@ -1,9 +1,9 @@
 {
-    "name": "node-reality",
+    "name": "node-reality0602",
     "version": "1.0.0",
     "description": "nodejs",
     "main": "index.js",
-    "author": "eooce",
+    "author": "trance",
     "license": "MIT",
     "private": false,
     "scripts": {
