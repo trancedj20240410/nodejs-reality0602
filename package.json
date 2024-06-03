@@ -1,15 +1,20 @@
 {
-    "name": "node-reality",
-    "version": "1.0.0",
-    "description": "nodejs",
-    "main": "index.js",
-    "author": "trancedj",
-    "license": "MIT",
-    "private": false,
-    "scripts": {
-      "start": "node index.js"
-    },
-    "engines": {
-      "node": ">=14"
-    }
+  "name": "docker-nodejs",
+  "version": "8.8.8",
+  "description": "Thsi is a node project",
+  "main": "index.js",
+  "author": "trance",
+  "repository": "https://github.com/trancedj20240410/nodejs-reality",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14"
   }
+}
