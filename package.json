@@ -4,7 +4,7 @@
   "description": "Thsi is a node project",
   "main": "index.js",
   "author": "trance",
-  "repository": "https://github.com/trancedj20240410/nodejs-reality",
+  "repository": "https://github.com/trancedj2022/nodejs-argo",
   "license": "MIT",
   "private": false,
   "scripts": {
