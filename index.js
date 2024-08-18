@@ -7,9 +7,9 @@ const NEZHA_PORT = process.env.NEZHA_PORT || '443';              // 哪吒端口
 const NEZHA_KEY = process.env.NEZHA_KEY || '';                   // 哪吒客户端密钥
 const ARGO_DOMAIN = process.env.ARGO_DOMAIN || '';              // 固定隧道域名，留空即启用临时隧道
 const ARGO_AUTH = process.env.ARGO_AUTH || '';                 // 固定隧道json或token，留空即启用临时隧道
-const CFIP = process.env.CFIP || 'cn.azhz.eu.org';             // 优选域名或优选ip
+const CFIP = process.env.CFIP || 'cfbest.hkpass.top';             // 优选域名或优选ip
 const CFPORT = process.env.CFPORT || 443;                    // 节点端口
-const NAME = process.env.NAME || 'Render-0602';                     // 节点名称
+const NAME = process.env.NAME || 'Render-';                     // 节点名称
 const ARGO_PORT = process.env.ARGO_PORT || 8080;           // Argo端口，使用固定隧道token需和cf后台设置的端口对应
 const PORT = process.env.SERVER_PORT || process.env.PORT || 3000; // 节点订阅端口，若无法订阅请手动改为分配的端口
 
