@@ -1,20 +1,21 @@
 {
-  "name": "docker-nodejs",
-  "version": "8.8.8",
-  "description": "Thsi is a node project",
+  "name": "jsr-ay",
+  "version": "1.0.0",
+  "description": "nodejs-for-r-ay",
   "main": "index.js",
-  "author": "trance",
-  "repository": "https://github.com/trancedj2022/nodejs-argo",
+  "repository": "",
+  "author": "MITs",
   "license": "MIT",
   "private": false,
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "axios": "latest",
-    "express": "^4.18.2"
+    "express": "latest",
+    "child_process": "^1.0.2"
   },
   "engines": {
     "node": ">=14"
   }
 }
+
